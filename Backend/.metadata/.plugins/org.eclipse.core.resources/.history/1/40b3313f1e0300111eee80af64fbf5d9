@@ -1,0 +1,62 @@
+package com.project.controller;
+
+import com.project.entity.Product;
+import com.project.repo.ProductRepo;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173")
+public class ProductsController {
+
+    private final ProductRepo productRepository;
+
+    public ProductsController(ProductRepo productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    // ---------------- ALL PRODUCTS ----------------
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    // ---------------- PRODUCT BY ID ----------------
+    @GetMapping("/products/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    // ---------------- SHIRTS ----------------
+    @GetMapping("/shirts")
+    public List<Product> getShirts() {
+        return productRepository.findByCategoryIgnoreCase("Shirts");
+    }
+
+    // ---------------- HOODIES ----------------
+    @GetMapping("/hoodies")
+    public List<Product> getHoodies() {
+        return productRepository.findByCategoryIgnoreCase("Hoodies");
+    }
+
+    // ---------------- PANTS ----------------
+    @GetMapping("/pants")
+    public List<Product> getPants() {
+        return productRepository.findByCategoryIgnoreCase("Pants");
+    }
+
+    // ---------------- WEDDING SUITS ----------------
+    @GetMapping("/wedding-suits")
+    public List<Product> getWeddingSuits() {
+        return productRepository.findByCategoryIgnoreCase("Wedding Suits");
+    }
+
+    // ---------------- POLO TSHIRTS ----------------
+    @GetMapping("/polo-tshirts")
+    public List<Product> getPoloTshirts() {
+        return productRepository.findByCategoryIgnoreCase("Polo T-Shirts");
+    }
+}
